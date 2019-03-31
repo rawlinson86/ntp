@@ -39,7 +39,6 @@ html {
 
   height: 100%;
 }
-
 /* Change the number of columns based on the size of the device.
    Fixed formula : (( tile-margin + tile-width ) * number of maximum capacity columns ) 
    For example if I have a smartphone with 411x823 resolution, the formula give us 253px with 3 col , and 337 with 4 col , and 420px with 5 col

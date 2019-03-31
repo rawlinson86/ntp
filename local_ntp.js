@@ -295,7 +295,7 @@ function setE2(ei2){
     }catch(err){};
     switch(ei2){
       case 'slide' : document.getElementById('e2i1').classList.add('ei_selected'); break;
-      case 'fade' : document.getElementById('e2i2').classList.add('ei_selected'); break;
+      case 'fade'  : document.getElementById('e2i2').classList.add('ei_selected'); break;
     }
     //Save Settings
     var arrayD= localGet("savedSettings");
