@@ -262,19 +262,92 @@ catch (err) {
   console.log("Delayed init failed, retrying later");
   window.setTimeout(function () { setup_grid(); }, 100);
 }
+//Settings Functions
+// Settings for e1
+function setE1(ei1){
+  //Check Buttons
+    try{
+      document.getElementById('e1i1').classList.remove('ei_selected');
+      document.getElementById('e1i2').classList.remove('ei_selected');
+      document.getElementById('e1i3').classList.remove('ei_selected');
+    }catch(err){};
+    switch(ei1){
+      case '0' : document.getElementById('e1i1').classList.add('ei_selected'); break;
+      case '6' : document.getElementById('e1i2').classList.add('ei_selected'); break;
+      case '40': document.getElementById('e1i3').classList.add('ei_selected'); break;
+    }
+  //Apply Settings
+  var elements = document.querySelectorAll('.grid-image');
+  for(var i=0; i<elements.length; i++){
+      elements[i].style.borderRadius = ei1 + "px";
+  }
+  //Save Settings
+  var arrayD= localGet("savedSettings");
+  arrayD[0]=ei1;
+  localStore("savedSettings",arrayD);
+}
+// Settings for e2 
+function setE2(ei2){
+  //Check Buttons
+  try{
+      document.getElementById('e2i1').classList.remove('ei_selected');
+      document.getElementById('e2i2').classList.remove('ei_selected');
+    }catch(err){};
+    switch(ei2){
+      case 'slide' : document.getElementById('e2i1').classList.add('ei_selected'); break;
+      case 'fade' : document.getElementById('e2i2').classList.add('ei_selected'); break;
+    }
+    //Save Settings
+    var arrayD= localGet("savedSettings");
+    arrayD[1]=ei2;
+    localStore("savedSettings",arrayD);
+}
+//Settings for e3
+function setE3(ei3){
+  //Check Buttons
+  try{
+      document.getElementById('e3i1').classList.remove('ei_selected');
+      document.getElementById('e3i2').classList.remove('ei_selected');
+      document.getElementById('e3i3').classList.remove('ei_selected');
+    }catch(err){};
+    switch(ei3){
+      case '150' : document.getElementById('e3i1').classList.add('ei_selected'); break;
+      case '450' : document.getElementById('e3i2').classList.add('ei_selected'); break;
+      case '850' : document.getElementById('e3i3').classList.add('ei_selected'); break;
+    }
+    //Save Settings
+    var arrayD= localGet("savedSettings");
+    arrayD[2]=ei3;
+    localStore("savedSettings",arrayD);
+}
+
+
 
 //Swiper
+//Check active slide on this session
 var currentSwiperSlide=sessionStorage.getItem("currentSwiperSlide");
-if(currentSwiperSlide == undefined){currentSwiperSlide=0;}
-//var menu = ['Slide 1', 'Slide 2', 'Slide 3']
+if(currentSwiperSlide == undefined){currentSwiperSlide=0;}//Set default slide
+//Check saved settings
+var currentSettings=localGet("savedSettings");
+if(currentSettings == undefined ){
+  currentSettings=['6','slide','450']
+  localStore("savedSettings",currentSettings);
+  setE1('6');
+  setE2('slide');
+  setE3('450');
+}//Set default Settings
+else{
+  setE1(currentSettings[0]);
+  setE2(currentSettings[1]);
+  setE3(currentSettings[2]);
+}
+//Create swiper with settings 
 var mySwiper = new Swiper ('.swiper-container', {
-  autoHeight : true,
-  pagination: {
-    el: '.swiper-pagination',
-    clickable: true,
-  },
-  initialSlide: currentSwiperSlide,
+    autoHeight : true,
+    speed: parseInt(currentSettings[2]),//speed:  Fast|150 , Normal|450 , Slow|850 
+    pagination: {el: '.swiper-pagination',clickable: true,},
+    effect : currentSettings[1],// effect : "slide", "fade"
+    fadeEffect: {crossFade: true},//Better fade effect
+    initialSlide: currentSwiperSlide,
   })
-mySwiper.on('slideChange', function () {sessionStorage.currentSwiperSlide = mySwiper.activeIndex;});
-
-
+  mySwiper.on('slideChange', function () {sessionStorage.currentSwiperSlide = mySwiper.activeIndex;});

@@ -77,7 +77,8 @@
       max-height: 80vh;
       min-width: 300px;
       overflow-y: auto;
-      padding: 25px;
+      padding: 15px;
+      padding-top: 30px;
       margin: 30px auto;
       color: #fff;
       background-color: #282828;
@@ -85,7 +86,7 @@
       box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
     }
     .form-group + .form-group {
-      margin-top: 20px;
+      margin-top: 10px;
     }
     .form-label {
       color: #fff;
@@ -231,12 +232,13 @@
     }
     .closelog-button{
       color: #fff;
-      margin: 5px;
+      margin-top: -25px;
+      margin-right: -10px;
       float: right;
       border: none;
       border-radius: 5px;
-      width: 35px;
-      height: 35px;
+      width: 25px;
+      height: 25px;
     }
         
   </style>
@@ -244,26 +246,32 @@
     <div id="myNav" class="vrlay" >
       <div class="vrlay-content">
           <div class="form-wrapper">
-              <div id="changelog1" style="max-height : 80vh; text-align: left !important;">
-                  
-                      <button type="button" id="btn-dark" class="btn-dark closelog-button" onclick="closeT()" >&#10006;</button>
-                 
+              <button type="button" id="btn-dark" class="btn-dark closelog-button" onclick="closeT()" >&#10006;</button>
+              
+              
+              <div id="changelog1" class="form-group" style="max-height : 80vh; text-align: left !important;">
                   <h2># Changelog</h2>
                   <hr>
+                  <h3>## [1.0.2] - 2019-04-01</h5>
+                    <h4>
+                      ### Added <br>
+                        - Option to change effect on grids when swiping<br>
+                        - Option to change speed of swiping <br><br>
+                      ### Changed <br>
+                      - Some UI improvements on settings dialog
+                    </h4>
                   <h3>## [1.0.1] - 2019-03-31</h5>
                   <h4>
-                    ### Changed <br><br>
+                    ### Changed <br>
                     - On item longpress , dont show context menu (let me know on discord if you want it back)<br>
                     - #Fixed :autoheight on grids with more than 8 items
                   </h4>
                   <h3>## [1.0.0] - 2019-03-28</h3>
-                  <h4>### Added<br><br>
-                     - Keep current grid in sessionStorage (reset when user close the tab)<br>
-                   ### Changed<br><br>
+                  <h4>### Added<br>
+                     - Keep current grid in sessionStorage (reset when user close the tab)<br><br>
+                   ### Changed<br>
                    - When the news is deactivated, keep the buttons in the bottom (user can use all the screen to scroll through the grids) <br>
                      - #Fixed : After adding an item, stay on the current grid</h4>
-
-                  
               </div>
               <form id="form-id1" action="" class="form" autocomplete="off" >
                   <div class="form-group"><label>Preview Tile</label></div><img id="p-tile" name="ptile" onerror="defaultSRC()">
@@ -291,9 +299,20 @@
               <form id="form-id2" action="" class="form" autocomplete="off">
                 <div class="form-group"><label class="form-label">Icons Style</label></div>
                 <div class="form-group">
-                  <button type="button" onclick="editIconStyle('0')"  class="ei_style" id="e1i1">Square </button>
-                  <button type="button" onclick="editIconStyle('6')"  class="ei_style ei_selected" id="e1i2">Rounded</button>
-                  <button type="button" onclick="editIconStyle('40')" class="ei_style" id="e1i3">Circle </button>
+                  <button type="button" onclick="setE1('0')"  class="ei_style" id="e1i1">Square </button>
+                  <button type="button" onclick="setE1('6')"  class="ei_style ei_selected" id="e1i2">Rounded</button>
+                  <button type="button" onclick="setE1('40')" class="ei_style" id="e1i3">Circle </button>
+                </div>
+                <div class="form-group"><label class="form-label">Swipe Effect</label></div>
+                <div class="form-group">
+                  <button type="button" onclick="setE2('slide')"  class="ei_style ei_selected" id="e2i1">Slide</button>
+                  <button type="button" onclick="setE2('fade')"   class="ei_style " id="e2i2">Fade</button>
+                </div>
+                <div class="form-group"><label class="form-label">Swipe Speed</label></div>
+                <div class="form-group">
+                  <button type="button" onclick="setE3('150')"  class="ei_style" id="e3i1">Fast</button>
+                  <button type="button" onclick="setE3('450')"  class="ei_style ei_selected" id="e3i2">Normal</button>
+                  <button type="button" onclick="setE3('850')"  class="ei_style" id="e3i3">Slow</button>
                 </div>
                 <!--
                 <div class="form-group"><label class="form-label">News Item Style</label></div>
@@ -312,12 +331,14 @@
       </div>
     </div>
     <script>
+        var needReload=0;
         //Changelog
         function showChangelog() {
           document.getElementById('form-id2').style.display="none";
           document.getElementById('form-id1').style.display="none";
           document.getElementById("changelog1").style.display="inline";
           document.getElementById("myNav").style.height="100%";
+          needReload=0;
         }
         //New Tile function config
         function newT() {
@@ -336,6 +357,7 @@
           document.getElementById('form-id1').style.display="none";
           document.getElementById('form-id2').style.display="inline";
           document.getElementById("myNav").style.height="100%";
+          needReload=1;
         }
         //Edit Tile function config
         function editT() {
@@ -353,50 +375,22 @@
           document.getElementById('i-url').value="";
           document.getElementById("form-id1").reset();
           document.getElementsByTagName('input').className="form-input";
-          //document.getElementById("p-tile").attr("src","");
+          if(needReload){needReload=0;location.reload();}
         }
         function defaultSRC(){
           document.getElementById('p-tile').src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
         }
-        function editIconStyle(ei1){
-          try{
-            document.getElementById('e1i1').classList.remove('ei_selected');
-            document.getElementById('e1i2').classList.remove('ei_selected');
-            document.getElementById('e1i3').classList.remove('ei_selected');
-          }catch(err){};
-          switch(ei1){
-            case '0': document.getElementById('e1i1').classList.add('ei_selected'); break;
-            case '6': document.getElementById('e1i2').classList.add('ei_selected'); break;
-            case '40': document.getElementById('e1i3').classList.add('ei_selected'); break;
-          }
-          var elements = document.querySelectorAll('.grid-image');
-          for(var i=0; i<elements.length; i++){
-              elements[i].style.borderRadius = ei1 + "px";
-          }
-
-          var savedSettings=localStorage["savedSettings"];
-          var arrayD=[ ei1 , 0, 0];
-          localStore("savedSettings",arrayD);
-          
-        }
         //Check ntpVersion
         if(localStorage.ntpVersion){
-          if(localStorage.ntpVersion != "1.0.1"){
-            console.log("Show Changelog");
+          if(localStorage.ntpVersion != "1.0.2"){
             showChangelog();
-            localStorage.ntpVersion="1.0.1"
-            console.log("Set ntpVersion");
+            localStorage.ntpVersion="1.0.2"
           }
         }
         else{
           showChangelog();
-          localStorage.ntpVersion="1.0.1"
+          localStorage.ntpVersion="1.0.2"
         }
-        //Load localstorage settings
-        if (localStorage["savedSettings"]) {
-            var arrayD = localGet("savedSettings");
-            editIconStyle(arrayD[0]);
-        } 
         //Activate/Disable custom icon url
         function editIURL(eID){
           var idIURL= document.getElementById('i-url');
