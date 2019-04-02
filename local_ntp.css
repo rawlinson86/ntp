@@ -784,7 +784,6 @@ input:checked + .toggle::before {
   text-decoration: none;
 }
 .plus-item{
-  
   transform: rotate(-45deg);
   top:5px;
 }

@@ -285,6 +285,7 @@ function setE1(ei1){
   var arrayD= localGet("savedSettings");
   arrayD[0]=ei1;
   localStore("savedSettings",arrayD);
+  needReload=1;
 }
 // Settings for e2 
 function setE2(ei2){
@@ -301,6 +302,7 @@ function setE2(ei2){
     var arrayD= localGet("savedSettings");
     arrayD[1]=ei2;
     localStore("savedSettings",arrayD);
+    needReload=1;
 }
 //Settings for e3
 function setE3(ei3){
@@ -319,6 +321,7 @@ function setE3(ei3){
     var arrayD= localGet("savedSettings");
     arrayD[2]=ei3;
     localStore("savedSettings",arrayD);
+    needReload=1;
 }
 
 

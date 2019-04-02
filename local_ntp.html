@@ -240,19 +240,79 @@
       width: 25px;
       height: 25px;
     }
+
+    .buttons {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      z-index: 10;
+    }
+
+    .trigger, .action {
+      border-radius: 5px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+    }
+
+    .trigger {
+      margin: 10px 0px 0px auto;
+      background: #2c4;
+      color: #fff;
+      height: 35px;
+      width: 35px;
+      line-height: 35px;
+      vertical-align: middle;
+      text-align: center;
+      font-size: 17.5px;
+      z-index: 1;
+    }
+
+.action {
+  background: #fff;
+  padding-left:8px;
+  color: #333;
+  height: 35px;
+  min-width: 150px;
+  text-align: left;
+  line-height: 35px;
+}
+.actions {
+  display: none;
+}
+
+.open .actions {
+  display: block;
+}
+.action + .action {
+      margin-top: 10px;
+    }
         
   </style>
-  <button type="button" class="plus-item" role="button" aria-label="Add new tile" title="Add new tile" id="add-button">&#10006;</button>
+  <!--
+  <button type="button" class="plus-item" role="button" aria-label="Add new tile" title="Add new tile" id="add-button">&#10006;</button>-->
+
     <div id="myNav" class="vrlay" >
       <div class="vrlay-content">
           <div class="form-wrapper">
               <button type="button" id="btn-dark" class="btn-dark closelog-button" onclick="closeT()" >&#10006;</button>
-              
-              
               <div id="changelog1" class="form-group" style="max-height : 80vh; text-align: left !important;">
                   <h2># Changelog</h2>
                   <hr>
-                  <h3>## [1.0.2] - 2019-04-01</h5>
+                  <h3>## [1.0.3] - 2019-04-02</h5>
+                    <h4>
+                      ### Added <br>
+                        - New UI Interactions . <br>Ok, I'm not sure if you'll like the new UI Interactions, 
+                        I had this idea and I implemented it . I found it very useful as well as being more intuitive and simpler (in my opinion).<br>
+                         I need your opinion, if you prefer the old style or I should improve the new UI or add an option to change the look in settings or whatever.<br>
+                          Let me know (it's very important to me to know what user think) :D <br>
+                        - Option to change speed of swiping <br><br>
+                      ### Changed <br>
+                        - Swipe to read news require less effort
+
+                    </h4>
+                  <hr>
+                  <div style="color:grey;">
+                    <h3>## [1.0.2] - 2019-04-01</h5>
                     <h4>
                       ### Added <br>
                         - Option to change effect on grids when swiping<br>
@@ -260,19 +320,20 @@
                       ### Changed <br>
                       - Some UI improvements on settings dialog
                     </h4>
-                  <hr>
-                  <h3>## [1.0.1] - 2019-03-31</h5>
-                  <h4>
-                    ### Changed <br>
-                    - On item longpress , dont show context menu (let me know on discord if you want it back)<br>
-                    - #Fixed :autoheight on grids with more than 8 items
-                  </h4>
-                  <h3>## [1.0.0] - 2019-03-28</h3>
-                  <h4>### Added<br>
-                     - Keep current grid in sessionStorage (reset when user close the tab)<br><br>
-                   ### Changed<br>
-                   - When the news is deactivated, keep the buttons in the bottom (user can use all the screen to scroll through the grids) <br>
-                     - #Fixed : After adding an item, stay on the current grid</h4>
+                    <h3>## [1.0.1] - 2019-03-31</h5>
+                    <h4>
+                      ### Changed <br>
+                      - On item longpress , dont show context menu (let me know on discord if you want it back)<br>
+                      - #Fixed :autoheight on grids with more than 8 items
+                    </h4>
+                    <h3>## [1.0.0] - 2019-03-28</h3>
+                    <h4>### Added<br>
+                      - Keep current grid in sessionStorage (reset when user close the tab)<br><br>
+                    ### Changed<br>
+                    - When the news is deactivated, keep the buttons in the bottom (user can use all the screen to scroll through the grids) <br>
+                      - #Fixed : After adding an item, stay on the current grid</h4>
+                  </div>
+                  
               </div>
               <form id="form-id1" action="" class="form" autocomplete="off" >
                   <div class="form-group"><label>Preview Tile</label></div><img id="p-tile" name="ptile" onerror="defaultSRC()">
@@ -324,7 +385,28 @@
           </div>
       </div>
     </div>
+      <div class="buttons" id="fab-btn" onclick="fabAction()">
+        
+        <div class="actions">
+            <div class="action" id="changelog-btn" onclick="showChangelog()">🖹 Changelog</div>
+          <div class="action" id="settings-btn" onclick="show_settings()">⚙️ Settings</div>
+          <div class="action" id="news-btn" onclick="enable_news()">📰 View News</div>
+          <div class="action" id="resetN-btn" onclick="resetNH_items()">📰 Reset readed News</div>
+          <div class="action" id="add-btn" onclick="newT()">&nbsp; 🞥 Add Item</div>
+
+        </div>
+        <div class="trigger"><span id="fb-btn">▲</span></div>
+      </div>
     <script>
+         function fabAction() {
+          var el = document.getElementById('fab-btn');
+          el.classList.toggle('open');
+          if(el.classList.contains('open')){
+            document.getElementById("fb-btn").innerHTML ="▼";
+          }else{
+            document.getElementById("fb-btn").innerHTML ="▲";
+          }
+        }
         var needReload=0;
         //Changelog
         function showChangelog() {
@@ -342,8 +424,9 @@
           document.getElementById("btn-del").style.display="none";
           document.getElementById("btn-save").style.display="none";
           document.getElementById("btn-add").style.display="inline";
-          document.getElementById("add-button").style.display="none";
+          //document.getElementById("add-button").style.display="none";
           document.getElementById("myNav").style.height="100%";
+          needReload=0;
         }
         //Show Settings 
         function show_settings() {
@@ -351,7 +434,6 @@
           document.getElementById('form-id1').style.display="none";
           document.getElementById('form-id2').style.display="inline";
           document.getElementById("myNav").style.height="100%";
-          needReload=1;
         }
         //Edit Tile function config
         function editT() {
@@ -364,26 +446,26 @@
         //Close Dialog 
         function closeT() {
           document.getElementById("myNav").style.height="0%";
-          document.getElementById("add-button").style.display="inline";
+          //document.getElementById("add-button").style.display="inline";
           document.getElementById('p-tile').src="#";
           document.getElementById('i-url').value="";
           document.getElementById("form-id1").reset();
           document.getElementsByTagName('input').className="form-input";
-          if(needReload){needReload=0;location.reload();}
+          if(needReload){location.reload();}
         }
         function defaultSRC(){
           document.getElementById('p-tile').src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
         }
         //Check ntpVersion
         if(localStorage.ntpVersion){
-          if(localStorage.ntpVersion != "1.0.2"){
+          if(localStorage.ntpVersion != "1.0.3"){
             showChangelog();
-            localStorage.ntpVersion="1.0.2"
+            localStorage.ntpVersion="1.0.3"
           }
         }
         else{
           showChangelog();
-          localStorage.ntpVersion="1.0.2"
+          localStorage.ntpVersion="1.0.3"
         }
         //Activate/Disable custom icon url
         function editIURL(eID){
@@ -492,7 +574,7 @@
   }
 
   var closeImg = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAA3NCSVQICAjb4U/gAAAACXBIWXMAACNvAAAjbwE1/Af7AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAANVQTFRF////11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK2F9P2WBR2WJT2mVW33pt5ZSJ5peN6J+V6KGY/PHv/PHw/PPy/PTz/fb1////fP+U/wAAADd0Uk5TAAEDBAYLDA4VHB4fNDg8PUJDR0pbc3yCg4SGiImVlqWnq661uLq/wsPFy9DT2d7m6+zt8/n6/uYUS2MAAANwSURBVHjazVvnWiJBEBwjBjwRCSfgkWHJectAUnTf/5FuDeehIhN3euv3fFu1aaa7upsxFUSiiXS+7LS6/fG432055Xw6EY0wKziI52o9bESvlosfBEq+H7tqTLAVk8bv2H5A9GfXQwhheH1mnv001YEEOqlTo/TRkgtJuKWoMfrzCpRQOTdCf1GHMuoX2vTHRWiheKxFv5ccQROj5J46/682DKD9S5F+N+PCCNzMrtLbd2AMjsKXcDmAQQwuJel3si6Mws3uSJ06BRhHQeKMOqwiAFQPRfmPmggEzSMx/pMOAkLnROj+A+P3FQg8g8MmAkST+x3sVxEoqpx/YaeAgFHYvh9kETiyW/dfN3gB7pZd+XgACxj8eDLtOrAC56fTOQNLyPwQ/7i2BLgbY6S9NqyhvSlOTMIikhv+gJFNAaPvf0IRVlH8lv/AMr7mTHXbAupf8k9Yx+fMtWJfQOVT/g8CrPsHJe7q28XsRvzad8v5PXdRac1/4W7C9yvPe5iK8k8fPW91y92Q/7s4Ke4l556PJ0EF06eX1QvuutSHAH4cvPTEFbzxezN+jPzhvwm81EdhBe/8DwKfzD8371r8tvgKhBf6+PMeiQ9hToEMP4ZvMXpM5tPiXFqKH4i9CriCMQWS/Lh6FdCAKQWy/Gi8+u8TGFIgzY/Ji7sfl9i+t1LI8wNxX0AOZhSo8CPnC6jBiAIlftR8AT2YUKDGjx5jEdljfCOVIj8QUYhFNpAp8/tRSQL6CtT5kWBpaCvQ4Eea5aGrQIcfeVaGpgItfpSZoinxQavHD4e1oKXg+VmLHy3WhZ4CPX50WR/6CtT50Wdj9dRm+vb4vWd1fozpBZC/AvKPkPw3JN+IyLdi8sOI/DgmD0jIQzLyoJQ8LKdPTMhTM/LklDw9Jzco6C0acpOK3KYjNypFrNqbB1mr9vGOv/RM3KyeyZvVS+7CjoRdv5C36+fcdSmJgsXtyn+o4gUL/4WtuCWTtYKFQMnmfr68E97gcDNbcAsm6yUb+qIVedmOvnBJXrqlL16Tl+/pGxjIWzjom1jI23joG5noW7nIm9no2/noGxrpWzrJm1rp23rpG5vpW7vpm9vp2/vpBxzoRzzoh1xCMOZDP+hEP+oVgmE3+nG/EAw8hmDkMwRDryEY+w3B4HMYRr9DMPwexPj/X+Yt8H/u7e31AAAAAElFTkSuQmCC';
-  document.getElementById('add-button').addEventListener('click', newT);
+  //document.getElementById('add-button').addEventListener('click', newT);
   
   var longpress = false;
   var presstimer = null;
@@ -824,9 +906,9 @@
     document.getElementById('newsMore').style.display='none';
     document.getElementById('configure-button').style.display='none';
     document.getElementById('close-button').style.display='none';
-    document.getElementById('enable-news-button').style.display='inline-block';
-    document.getElementById('enable-news-button').addEventListener('click', enable_news);
-    document.getElementById("sc-grids").style.minHeight="calc(90vh - 80px)";
+    //document.getElementById('enable-news-button').style.display='inline-block';
+    //document.getElementById('enable-news-button').addEventListener('click', enable_news);
+    document.getElementById("sc-grids").style.minHeight="calc(100vh - 50px)";
   }
 
   function create_new_item()
@@ -1281,63 +1363,63 @@ if (!has_valid_entries)
 
 addSwipeToDelete();
 function addSwipeToDelete(){
-  var xDown = null;
-  var xDiff = null;
-  var tasks = document.getElementsByClassName("newsItem");
-  function is_touch_device(){try{document.createEvent("TouchEvent");return true;}catch (e){return false;}}
-  for ( var i = 0; i < tasks.length; i++ ) {
-    if(is_touch_device()){
-      tasks[i].addEventListener('touchstart', handleTouchStart, false);
-      tasks[i].addEventListener('touchmove', handleTouchMove, false);
-      tasks[i].addEventListener('touchend', handleTouchEnd, false);
+    var xDown = null;
+    var xDiff = null;
+    var tasks = document.getElementsByClassName("newsItem");
+    function is_touch_device(){try{document.createEvent("TouchEvent");return true;}catch (e){return false;}}
+    for ( var i = 0; i < tasks.length; i++ ) {
+      if(is_touch_device()){
+        tasks[i].addEventListener('touchstart', handleTouchStart, false);
+        tasks[i].addEventListener('touchmove', handleTouchMove, false);
+        tasks[i].addEventListener('touchend', handleTouchEnd, false);
+      }
     }
-  }
-  function handleTouchStart(evt) {
-    xDown = evt.touches[0].clientX;
-}
-function handleTouchMove(evt) {
-   var el=(evt.target.closest("div.newsItem"));
-    if ( ! xDown ) {return;}
-    var xUp = evt.touches[0].clientX;
-    var yUp = evt.touches[0].clientY;
-    xDiff = xDown - xUp;
-    if(xDiff < 30) return;
-    el.style.marginLeft ="-"+(xDiff-30) + 'px';
-    
-    var wrap =el.previousSibling;
-    wrap.style.width=xDiff+'px';
-    if(xDiff < 180){
-      wrap.style.backgroundColor="grey";
-      var op= ( xDiff/ 180 );
-      el.style.opacity = "1"-op;
-      wrap.style.opacity= op;
+    function handleTouchStart(evt) {
+      xDown = evt.touches[0].clientX;
     }
-    if(xDiff>180)
-      wrap.style.backgroundColor="red";
+  function handleTouchMove(evt) {
+    var el=(evt.target.closest("div.newsItem"));
+      if ( ! xDown ) {return;}
+      var xUp = evt.touches[0].clientX;
+      var yUp = evt.touches[0].clientY;
+      xDiff = xDown - xUp;
+      if(xDiff < 30) return;
+      el.style.marginLeft ="-"+(xDiff-30) + 'px';
+      
+      var wrap =el.previousSibling;
+      wrap.style.width=xDiff+'px';
+      if(xDiff < 130){
+        wrap.style.backgroundColor="grey";
+        var op= ( xDiff/ 130 );
+        el.style.opacity = "1"-op;
+        wrap.style.opacity= op;
+      }
+      if(xDiff>130)
+        wrap.style.backgroundColor="red";
 
-}
-function handleTouchEnd(evt){
-  var el=(evt.target.closest("div.newsItem"));
-  var wrap =el.previousSibling;
-	if(xDiff > 180 ){
-    wrap.style.display="none"
-    el.style.display="none";
-    var itemsArray;
-    if (localStorage.getItem('itemsNewsH')) itemsArray = JSON.parse(localStorage.getItem('itemsNewsH'));
-    else itemsArray = [];
-    itemsArray.push(el.id);
-    localStorage.setItem('itemsNewsH', JSON.stringify(itemsArray));
-    console.log("News with id : "+el.id+" added to hide list");
-	}	
-	else{
-    el.style.opacity = "1";
-    el.style.marginLeft ='8px';
-    wrap.style.marginRight='9px';
-    wrap.style.width='1px';
   }
-  xDiff = null;
-  xDown = null;
-}
+  function handleTouchEnd(evt){
+    var el=(evt.target.closest("div.newsItem"));
+    var wrap =el.previousSibling;
+    if(xDiff > 130 ){
+      wrap.style.display="none"
+      el.style.display="none";
+      var itemsArray;
+      if (localStorage.getItem('itemsNewsH')) itemsArray = JSON.parse(localStorage.getItem('itemsNewsH'));
+      else itemsArray = [];
+      itemsArray.push(el.id);
+      localStorage.setItem('itemsNewsH', JSON.stringify(itemsArray));
+      console.log("News with id : "+el.id+" added to hide list");
+    }	
+    else{
+      el.style.opacity = "1";
+      el.style.marginLeft ='8px';
+      wrap.style.marginRight='9px';
+      wrap.style.width='1px';
+    }
+    xDiff = null;
+    xDown = null;
+  }
 
 }
 function resetNH_items(){
@@ -1346,20 +1428,11 @@ function resetNH_items(){
 }
 
 
-
-
-
-
 </script>
 
 </div>
 
 
-<div id="bottom_panel" style="text-align: center; width: 100%">
-  <span id="enable-news-button" class="bp_buttons"> 📰 View News </span>
-  <span id="settings-button"  class="bp_buttons">  ⚙️ Settings </span>  
-  <span id="resetNH-button"  class="bp_buttons">  Reset NH </span>  
-</div>
 <script>
   function enable_news()
   {
@@ -1382,15 +1455,15 @@ function resetNH_items(){
   }
   else
   {
-    document.getElementById('enable-news-button').addEventListener('click', enable_news);
-    document.getElementById('settings-button').addEventListener('click', show_settings);
-    document.getElementById('resetNH-button').addEventListener('click', resetNH_items);
+    //document.getElementById('enable-news-button').addEventListener('click', enable_news);
+    //document.getElementById('settings-button').addEventListener('click', show_settings);
+    //document.getElementById('resetNH-button').addEventListener('click', resetNH_items);
   }
   if (typeof localStorage.hideNews == "undefined") {
-    document.getElementById('enable-news-button').style.display='none';
+    //document.getElementById('enable-news-button').style.display='none';
     document.getElementById("sc-grids").style.minHeight="auto";
   }else{
-    document.getElementById("sc-grids").style.minHeight="calc(90vh - 80px )";
+    document.getElementById("sc-grids").style.minHeight="calc(100vh - 50px)";
   }
 </script>
   <script async defer src="./local_ntp.js"
