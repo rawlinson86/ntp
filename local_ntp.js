@@ -323,7 +323,34 @@ function setE3(ei3){
     localStore("savedSettings",arrayD);
     needReload=1;
 }
+//Settings for e3
+function setE4(ei4){
+  //Check Buttons
+  try{
+      document.getElementById('e4i1').classList.remove('ei_selected');
+      document.getElementById('e4i2').classList.remove('ei_selected');
+    }catch(err){};
 
+    switch(ei4){
+      case 'classic' : document.getElementById('e4i1').classList.add('ei_selected'); 
+      var Elems=document.getElementsByClassName('show-classic');
+      for(var i=0;i<Elems.length;i++){
+        Elems[i].style.display="block";
+      }
+      document.getElementById('fab-btn').style.display="none";break;
+      case 'compact' : document.getElementById('e4i2').classList.add('ei_selected'); 
+      var Elems=document.getElementsByClassName('show-classic');
+      for(var i=0;i<Elems.length;i++){
+        Elems[i].style.display="none";
+      }
+      document.getElementById('fab-btn').style.display="inline";break;
+    }
+    //Save Settings
+    var arrayD= localGet("savedSettings");
+    arrayD[3]=ei4;
+    localStore("savedSettings",arrayD);
+    needReload=1;
+}
 
 
 //Swiper
@@ -333,16 +360,18 @@ if(currentSwiperSlide == undefined){currentSwiperSlide=0;}//Set default slide
 //Check saved settings
 var currentSettings=localGet("savedSettings");
 if(currentSettings == undefined ){
-  currentSettings=['6','slide','450']
+  currentSettings=['6','slide','450','classic'];
   localStore("savedSettings",currentSettings);
   setE1('6');
   setE2('slide');
   setE3('450');
+  setE4('classic')
 }//Set default Settings
 else{
   setE1(currentSettings[0]);
   setE2(currentSettings[1]);
   setE3(currentSettings[2]);
+  setE4(currentSettings[3]);
 }
 //Create swiper with settings 
 var mySwiper = new Swiper ('.swiper-container', {

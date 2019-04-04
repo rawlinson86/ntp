@@ -13,8 +13,6 @@
       chrome.embeddedSearch.newTabPage.getMostVisitedItemData = function (rid) { return {url: 'http://mostvisited' + rid + '.com' }; }
       newsServer = 'https://chromecontentsuggestions-pa.kiwibrowser.com/testnews/?';
     }
-    
-    
 
     function localStore(key, obj) {
       return window.localStorage.setItem(key, JSON.stringify(obj));
@@ -72,6 +70,7 @@
       box-shadow: 6px 23px 26px -17px rgba(219,219,219,1);
       padding-top: 40px;
     }
+
     .form-wrapper {
       max-width: 30%;
       max-height: 80vh;
@@ -84,9 +83,6 @@
       background-color: #282828;
       border-radius: 5px;
       box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
-    }
-    .form-group + .form-group {
-      margin-top: 10px;
     }
     .form-label {
       color: #fff;
@@ -230,7 +226,7 @@
       height: 14px;
       margin: 5px;
     }
-    .closelog-button{
+    .btn-close{
       color: #fff;
       margin-top: -25px;
       margin-right: -10px;
@@ -241,19 +237,19 @@
       height: 25px;
     }
 
+    
     .buttons {
+      display: none;
       position: fixed;
       bottom: 15px;
       right: 15px;
       z-index: 10;
     }
-
     .trigger, .action {
       border-radius: 5px;
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
       cursor: pointer;
     }
-
     .trigger {
       margin: 10px 0px 0px auto;
       background: #007aff;
@@ -266,98 +262,96 @@
       font-size: 17.5px;
       z-index: 1;
     }
-
-.action {
-  background-color: #000;
-  padding-left:8px;
-  color: #fff;
-  height: 35px;
-  min-width: 150px;
-  text-align: left;
-  line-height: 35px;
-}
-.actions {
-  display: none;
-}
-
-.open .actions {
-  display: block;
-}
-.action + .action {
-      margin-top: 10px;
+    .action {
+      background-color: #000;
+      padding-left:8px;
+      color: #fff;
+      height: 35px;
+      min-width: 150px;
+      text-align: left;
+      line-height: 35px;
     }
-        
-  </style>
-  <!--
-  <button type="button" class="plus-item" role="button" aria-label="Add new tile" title="Add new tile" id="add-button">&#10006;</button>-->
+    .actions {
+      display: none;
+    }
 
+    .open .actions {
+      display: block;
+    }
+    .action + .action ,.form-group + .form-group{
+          margin-top: 10px;
+        }
+    .show-classic{
+      display: none;
+    }
+  </style>
+  <button type="button" class="plus-item show-classic" role="button" onclick="newT()" id="add-button">&#10006;</button>
     <div id="myNav" class="vrlay" >
       <div class="vrlay-content">
-          <div class="form-wrapper">
-              <button type="button" id="btn-dark" class="btn-dark closelog-button" onclick="closeT()" >&#10006;</button>
-              <div id="changelog1" class="form-group" style="max-height : 80vh; text-align: left !important;">
-                  <h2># Changelog</h2>
-                  <hr>
-                  <h3>## [1.0.3] - 2019-04-02</h5>
-                    <h4>
-                      ### Added <br>
-                        - New UI Interactions . <br>Ok, I'm not sure if you'll like the new UI Interactions, 
-                        I had this idea and I implemented it . I found it very useful as well as being more intuitive and simpler (in my opinion).<br>
-                         I need your opinion, if you prefer the old style or I should improve the new UI or add an option to change the look in settings or whatever.<br>
-                          Let me know (it's very important to me to know what user think) :D <br>
-                        - Option to change speed of swiping <br><br>
-                      ### Changed <br>
-                        - Swipe to read news require less effort
-
-                    </h4>
-                  <hr>
-                  <div style="color:grey;">
-                    <h3>## [1.0.2] - 2019-04-01</h5>
-                    <h4>
-                      ### Added <br>
-                        - Option to change effect on grids when swiping<br>
-                        - Option to change speed of swiping <br><br>
-                      ### Changed <br>
-                      - Some UI improvements on settings dialog
-                    </h4>
-                    <h3>## [1.0.1] - 2019-03-31</h5>
-                    <h4>
-                      ### Changed <br>
-                      - On item longpress , dont show context menu (let me know on discord if you want it back)<br>
-                      - #Fixed :autoheight on grids with more than 8 items
-                    </h4>
-                    <h3>## [1.0.0] - 2019-03-28</h3>
-                    <h4>### Added<br>
-                      - Keep current grid in sessionStorage (reset when user close the tab)<br><br>
-                    ### Changed<br>
-                    - When the news is deactivated, keep the buttons in the bottom (user can use all the screen to scroll through the grids) <br>
-                      - #Fixed : After adding an item, stay on the current grid</h4>
-                  </div>
-                  
+        <div class="form-wrapper">
+          <button type="button" class="btn-dark btn-close" onclick="close_dialog()" >&#10006;</button>
+          <div id="changelog1" class="form-group" style="max-height : 80vh; text-align: left !important;">
+            <h2># Changelog</h2>
+            <hr>
+            <h3>## [1.0.4] - 2019-04-04</h5>
+            <h4>### Added <br>
+            - Button to edit tile ( longpress on tile to enter edit mode , then pick the edit icon :D ).<br>
+            - Option to switch UI Interactions to classic(default) or compact (all buttons are inside one floating button ) <br><br>
+            ### Changed <br>
+            - Some UI improvement
+            </h4>
+            <hr>
+            <div style="color:grey;">
+              <h3>## [1.0.3] - 2019-04-02</h5>
+                <h4>### Added <br>
+                - New UI Interactions .<br>
+                - Option to change speed of swiping <br><br>
+                ### Changed <br>
+                - Swipe to read news require less effort
+              </h4>
+              <h3>## [1.0.2] - 2019-04-01</h5>
+              <h4>
+              ### Added <br>
+              - Option to change effect on grids when swiping<br>
+              - Option to change speed of swiping <br><br>
+              ### Changed <br>
+              - Some UI improvements on settings dialog
+              </h4>
+              <h3>## [1.0.1] - 2019-03-31</h5>
+              <h4>
+              ### Changed <br>
+              - On item longpress , dont show context menu (let me know on discord if you want it back)<br>
+              - #Fixed :autoheight on grids with more than 8 items
+              </h4>
+              <h3>## [1.0.0] - 2019-03-28</h3>
+              <h4>### Added<br>
+              - Keep current grid in sessionStorage (reset when user close the tab)<br><br>
+              ### Changed<br>
+              - When the news is deactivated, keep the buttons in the bottom (user can use all the screen to scroll through the grids) <br>
+              - #Fixed : After adding an item, stay on the current grid</h4>
+            </div>
+          </div>
+          <form id="form-id1" action="" class="form" autocomplete="off" >
+            <div class="form-group"><label>Preview Tile</label></div><img id="p-tile" name="ptile" onerror="defaultSRC()">
+              <div class="form-group">
+                <button type="button" onclick="editIURL(this)" aria-label="Edit icon url" title="Edit icon url" id="e-icon">&#9998 Auto</button>
+                <input id="i-url" onpaste="setPT_fromIurl(this);" onblur="setPT_fromIurl(this);" class="form-input" type="text" style="text-align: center;display: none;"/>
               </div>
-              <form id="form-id1" action="" class="form" autocomplete="off" >
-                  <div class="form-group"><label>Preview Tile</label></div><img id="p-tile" name="ptile" onerror="defaultSRC()">
-                  <div class="form-group">
-                    <button type="button" onclick="editIURL(this)" aria-label="Edit icon url" title="Edit icon url" id="e-icon">&#9998 Auto</button>
-                    <input id="i-url" onpaste="setPT_fromIurl(this);" onblur="setPT_fromIurl(this);" class="form-input" type="text" style="text-align: center;display: none;"/>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="t-url">Website adress</label>
-                    <input id="t-url" onkeyup="setPT_fromTurl(this);" class="form-input" type="text" value="http://" >
-                    <!--pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$"
-                    pattern="[A-Za-z]{1,25}"-->
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="t-lab">Tile label</label>
-                    <input id="t-lab" class="form-input" type="text" placeholder="Optional"/>
-                  </div>
-                <div class="form-group">
-                  <button type="submit" onclick="create_new_item()" id="btn-add" class="btn-add">Add</button>
-                  <button type="submit" id="btn-del" class="btn-del">Delete</button>
-                  <button type="submit" id="btn-save" class="btn-save" onclick="saveSettings()">Save</button>
-                  <button type="button" id="btn-dark" class="btn-dark" onclick="closeT()" >Close</button>
-                </div>
-              </form>
+              <div class="form-group">
+                <label class="form-label" for="t-url">Website adress</label>
+                <input id="t-url" onkeyup="setPT_fromTurl(this);" class="form-input" type="text" value="http://" >
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="t-lab">Tile label</label>
+                <input id="t-lab" class="form-input" type="text" placeholder="Optional"/>
+              </div>
+              <div class="form-group">
+                <button type="submit" onclick="create_new_item()" id="btn-add" class="btn-add">Add</button>
+                <button type="submit" id="btn-del"  class="btn-del"  onclick="delete_favorite()">Delete</button>
+                <button type="submit" id="btn-save" class="btn-save" onclick="save_edited_tile()">Save</button>
+                <button type="button" id="btn-dark" class="btn-dark" onclick="close_dialog()" >Close</button>
+              </div>
+            </form>
               <form id="form-id2" action="" class="form" autocomplete="off">
                 <div class="form-group"><label class="form-label">Icons Style</label></div>
                 <div class="form-group">
@@ -376,27 +370,32 @@
                   <button type="button" onclick="setE3('450')"  class="ei_style ei_selected" id="e3i2">Normal</button>
                   <button type="button" onclick="setE3('850')"  class="ei_style" id="e3i3">Slow</button>
                 </div>
+                <div class="form-group"><label class="form-label">UI Buttons</label></div>
                 <div class="form-group">
-                  <button type="submit" id="btn-res" class="btn-del" onclick="reset_page()">Reset</button>
-                  <button type="button" id="btn-dark" class="btn-dark" onclick="showChangelog()" >Changelog</button>
-                  <button type="button" id="btn-dark" class="btn-dark" onclick="closeT()" >Close</button>
+                  <button type="button" onclick="setE4('classic')"  class="ei_style" id="e4i1">Classic</button>
+                  <button type="button" onclick="setE4('compact')"  class="ei_style ei_selected" id="e4i2">Compact</button>
+                </div>
+                <div class="form-group">
+                  <button type="submit" id="btn-res"  class="btn-del" onclick="reset_page()">Reset</button>
+                  <button type="button" id="btn-dark" class="btn-dark" onclick="show_changelog()" >Changelog</button>
+                  <button type="button" id="btn-dark" class="btn-dark" onclick="close_dialog()" >Close</button>
                 </div>
             </form>
           </div>
       </div>
     </div>
-      <div class="buttons" id="fab-btn" onclick="fabAction()">
-        
-        <div class="actions">
-            <div class="action" id="changelog-btn" onclick="showChangelog()"> Changelog</div>
+
+    <div class="buttons" id="fab-btn" onclick="fabAction()">
+      <div class="actions">
+        <div class="action" id="changelog-btn" onclick="show_changelog()"> Changelog</div>
           <div class="action" id="settings-btn" onclick="show_settings()">⚙️ Settings</div>
           <div class="action" id="news-btn" onclick="enable_news()">📰 View News</div>
           <div class="action" id="resetN-btn" onclick="resetNH_items()">📰 Reset readed News</div>
           <div class="action" id="add-btn" onclick="newT()">&nbsp; &#x2b; Add Item</div>
-
         </div>
-        <div class="trigger"><span id="fb-btn">▲</span></div>
-      </div>
+      <div class="trigger"><span id="fb-btn">▲</span></div>
+    </div>
+    
     <script>
          function fabAction() {
           var el = document.getElementById('fab-btn');
@@ -409,7 +408,7 @@
         }
         var needReload=0;
         //Changelog
-        function showChangelog() {
+        function show_changelog() {
           document.getElementById('form-id2').style.display="none";
           document.getElementById('form-id1').style.display="none";
           document.getElementById("changelog1").style.display="inline";
@@ -436,16 +435,61 @@
           document.getElementById("myNav").style.height="100%";
           needReload=0;
         }
+        var currentTileEdit;
+        //Delete current Tile
+        function delete_favorite(){
+
+          remove_favorite(currentTileEdit);
+          close_dialog();
+        }
         //Edit Tile function config
-        function editT() {
-          document.getElementById("btn-del").style.display="block";
-          document.getElementById("btn-save").style.display="block";
+        function edit_tile(el) {
+          document.getElementById("changelog1").style.display="none";
+          document.getElementById('form-id2').style.display="none";
+          document.getElementById('form-id1').style.display="inline";
+          document.getElementById("btn-del").style.display="inline";
+          document.getElementById("btn-save").style.display="inline";
           document.getElementById("btn-add").style.display="none";
-          document.getElementsByTagName('input').addClass('filled');
-          document.getElementById("myNav").css("height","100%");
+          document.getElementById("myNav").style.height="100%";
+          needReload=0;
+          currentTileEdit=el;
+          //Get current item data 
+          var item = el.target;
+          item = item.parentNode;
+          var url = item.querySelector('#tile_target').href;
+          var title = item.textContent;
+          var img;
+          try {img= item.querySelector('#tile_target > img').src;}
+          catch{console.log("error image null");}
+          //Set dialog with current item to edit
+          document.getElementById('e-icon').innerHTML="&#9998 Custom";
+          document.getElementById('i-url').style.display="inline";
+          document.getElementById('p-tile').src =img;
+          document.getElementById('i-url').value=img;
+          document.getElementById('t-url').value=url;
+          document.getElementById('t-lab').value=title;
+        }
+        function save_edited_tile(){
+          console.log("Save the edited tile");
+          var nGrid = (parseInt(currentSwiperSlide)+1);
+          var keyS= "storedItems"+nGrid;
+          var items = localGet(keyS);
+          var item = currentTileEdit.target;
+          item = item.parentNode;
+          var bkmg=document.getElementById("bookmarks-grid"+nGrid);
+          var index=items.offset;
+          for (var i = 0, len = bkmg.children.length; i < len; i++)
+          { if(bkmg.children[i] == item) index=i;}
+          alert("Index to edit : "+index + " on  "+ keyS);
+          var url = document.getElementById('t-url').value;
+          var imgSrc =document.getElementById('p-tile').src;
+          var title=document.getElementById('t-lab').value;
+          items[index]= {url: url,title:title,imgSrc:imgSrc,ngrid:nGrid }
+          localStore(keyS,items);
+          console.log("Edit to storage, item with index" + index + " grid n°: "+nGrid+"the URL: " + url + " title: "+title + " imgSRc: "+imgSrc);
         }
         //Close Dialog 
-        function closeT() {
+        function close_dialog() {
           document.getElementById("myNav").style.height="0%";
           //document.getElementById("add-button").style.display="inline";
           document.getElementById('p-tile').src="#";
@@ -459,14 +503,14 @@
         }
         //Check ntpVersion
         if(localStorage.ntpVersion){
-          if(localStorage.ntpVersion != "1.0.3"){
-            showChangelog();
-            localStorage.ntpVersion="1.0.3"
+          if(localStorage.ntpVersion != "1.0.4"){
+            show_changelog();
+            localStorage.ntpVersion="1.0.4"
           }
         }
         else{
-          showChangelog();
-          localStorage.ntpVersion="1.0.3"
+          show_changelog();
+          localStorage.ntpVersion="1.0.4"
         }
         //Activate/Disable custom icon url
         function editIURL(eID){
@@ -575,7 +619,7 @@
   }
 
   var closeImg = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAAA3NCSVQICAjb4U/gAAAACXBIWXMAACNvAAAjbwE1/Af7AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAANVQTFRF////11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK11pK2F9P2WBR2WJT2mVW33pt5ZSJ5peN6J+V6KGY/PHv/PHw/PPy/PTz/fb1////fP+U/wAAADd0Uk5TAAEDBAYLDA4VHB4fNDg8PUJDR0pbc3yCg4SGiImVlqWnq661uLq/wsPFy9DT2d7m6+zt8/n6/uYUS2MAAANwSURBVHjazVvnWiJBEBwjBjwRCSfgkWHJectAUnTf/5FuDeehIhN3euv3fFu1aaa7upsxFUSiiXS+7LS6/fG432055Xw6EY0wKziI52o9bESvlosfBEq+H7tqTLAVk8bv2H5A9GfXQwhheH1mnv001YEEOqlTo/TRkgtJuKWoMfrzCpRQOTdCf1GHMuoX2vTHRWiheKxFv5ccQROj5J46/682DKD9S5F+N+PCCNzMrtLbd2AMjsKXcDmAQQwuJel3si6Mws3uSJ06BRhHQeKMOqwiAFQPRfmPmggEzSMx/pMOAkLnROj+A+P3FQg8g8MmAkST+x3sVxEoqpx/YaeAgFHYvh9kETiyW/dfN3gB7pZd+XgACxj8eDLtOrAC56fTOQNLyPwQ/7i2BLgbY6S9NqyhvSlOTMIikhv+gJFNAaPvf0IRVlH8lv/AMr7mTHXbAupf8k9Yx+fMtWJfQOVT/g8CrPsHJe7q28XsRvzad8v5PXdRac1/4W7C9yvPe5iK8k8fPW91y92Q/7s4Ke4l556PJ0EF06eX1QvuutSHAH4cvPTEFbzxezN+jPzhvwm81EdhBe/8DwKfzD8371r8tvgKhBf6+PMeiQ9hToEMP4ZvMXpM5tPiXFqKH4i9CriCMQWS/Lh6FdCAKQWy/Gi8+u8TGFIgzY/Ji7sfl9i+t1LI8wNxX0AOZhSo8CPnC6jBiAIlftR8AT2YUKDGjx5jEdljfCOVIj8QUYhFNpAp8/tRSQL6CtT5kWBpaCvQ4Eea5aGrQIcfeVaGpgItfpSZoinxQavHD4e1oKXg+VmLHy3WhZ4CPX50WR/6CtT50Wdj9dRm+vb4vWd1fozpBZC/AvKPkPw3JN+IyLdi8sOI/DgmD0jIQzLyoJQ8LKdPTMhTM/LklDw9Jzco6C0acpOK3KYjNypFrNqbB1mr9vGOv/RM3KyeyZvVS+7CjoRdv5C36+fcdSmJgsXtyn+o4gUL/4WtuCWTtYKFQMnmfr68E97gcDNbcAsm6yUb+qIVedmOvnBJXrqlL16Tl+/pGxjIWzjom1jI23joG5noW7nIm9no2/noGxrpWzrJm1rp23rpG5vpW7vpm9vp2/vpBxzoRzzoh1xCMOZDP+hEP+oVgmE3+nG/EAw8hmDkMwRDryEY+w3B4HMYRr9DMPwexPj/X+Yt8H/u7e31AAAAAElFTkSuQmCC';
-  //document.getElementById('add-button').addEventListener('click', newT);
+  var editImg  = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAQAAABKfvVzAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfjBAQNMAYYG/KOAAABPUlEQVQ4y4WUPUsDMRjHf+03cHCoRqmfQaSLCIKLVHuuTu5q61wKfgcXoZ4iCC5uisXJz9G6HIKd7atD7bXnkLs2lyYxz5Tk93/yvCTJkB7reBTJI4A2n7zyzBeWsUqdkEizCU/kTfgRgwU4sT4lHb9gYsXlOZW0dzcuJbNThCOYdGArUnBnRYac0FLmvixkaBVcAjlFEiKgbPV+wwgPOFZWz+DNgu8AVUbU6CrrDfiw4gDX2k4LQ4V+2I3xTb61vcGiwIVH9PSQ3HhEM0ugdHzKL0MACryzZLhxAZwr+j18OmxRSFVGtVNYmzUuALL4dKz4GAFwG08fAdh2dL6ePJy+TIh7mkyteI9cksq+w+v8eh+q2Vf+fUBlvWClODBzMAemV73MFWOD74d57JDRRAKPIhvxNxPQ4IW2CvwB/V+HzUo9bY8AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMDQtMDRUMTE6NDg6MDYrMDI6MDDDBapeAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTA0LTA0VDExOjQ4OjA2KzAyOjAwslgS4gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII=';
   
   var longpress = false;
   var presstimer = null;
@@ -725,10 +769,11 @@
       imageUri=item.imgSrc;
     }
     var nGrid=item.ngrid;
-    innerDiv.innerHTML = '<img id="closeImg" src="' + closeImg + '" class="closeImg closeImgInvisible" height="20" width="20" style="position: absolute; right: 0px; border: 0px;" /><a id="tile_target" name="'+item.title+'" href="' + item.url + '"><img border="0" class="grid-image" style="border-radius:'+arrayD[0]+'px" title="'+item.title+'" src="' + imageUri + '" id="icon' + randomId + '" onError="invalidate_image(this)"/><span id="title_span" style="width: 60px; line-height: 15px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: inline-block">' + item.title + '</span></a>';
+    innerDiv.innerHTML = '<img id="closeImg" src="' + closeImg + '" class="closeImg closeImgInvisible" height="20" width="20" style="position: absolute; right: 0px; border: 0px;" /><img id="editImg" src="' + editImg + '" class="closeImg closeImgInvisible" height="20" width="20" style="position: absolute; right: 0px; bottom: 0px; border: 0px;" /><a id="tile_target" name="'+item.title+'" href="' + item.url + '"><img border="0" class="grid-image" style="border-radius:'+arrayD[0]+'px" title="'+item.title+'" src="' + imageUri + '" id="icon' + randomId + '" onError="invalidate_image(this)"/><span id="title_span" style="width: 60px; line-height: 15px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: inline-block">' + item.title + '</span></a>';
     innerDiv.style.minHeight = '64px';
 
     innerDiv.querySelector('#closeImg').addEventListener("touchstart", remove_favorite);
+    innerDiv.querySelector('#editImg').addEventListener("touchstart", edit_tile);
     innerDiv.querySelector('#tile_target').addEventListener("touchstart", process_start);
     document.body.addEventListener("click", process_body_click);
     innerDiv.querySelector('#tile_target').addEventListener("touchend", process_cancel);
@@ -907,9 +952,8 @@
     document.getElementById('newsMore').style.display='none';
     document.getElementById('configure-button').style.display='none';
     document.getElementById('close-button').style.display='none';
-    //document.getElementById('enable-news-button').style.display='inline-block';
-    //document.getElementById('enable-news-button').addEventListener('click', enable_news);
-    document.getElementById("sc-grids").style.minHeight="calc(100vh - 50px)";
+    document.getElementById('enable-news-button').style.display='inline-block';
+    document.getElementById("sc-grids").style.minHeight="calc(80vh - 50px)";
   }
 
   function create_new_item()
@@ -1433,6 +1477,11 @@ function resetNH_items(){
 
 </div>
 
+<div id="bottom_panel" class="show-classic" style="text-align: center; width: 100%;margin-bottom: 20px;margin-top: 25px;">
+  <span id="enable-news-button" class="bp_buttons" onclick="enable_news()"> 📰 View News </span>
+  <span id="settings-button"    class="bp_buttons" onclick="show_settings()">  ⚙️ Settings </span>  
+  <span id="resetNH-button"     class="bp_buttons" onclick="resetNH_items()">  Reset readed news </span>  
+</div>
 
 <script>
   function enable_news()
@@ -1464,7 +1513,7 @@ function resetNH_items(){
     //document.getElementById('enable-news-button').style.display='none';
     document.getElementById("sc-grids").style.minHeight="auto";
   }else{
-    document.getElementById("sc-grids").style.minHeight="calc(100vh - 50px)";
+    document.getElementById("sc-grids").style.minHeight="calc(80vh - 50px)";
   }
 </script>
   <script async defer src="./local_ntp.js"
