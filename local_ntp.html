@@ -281,9 +281,7 @@
     .action + .action ,.form-group + .form-group{
           margin-top: 10px;
         }
-    .show-classic{
-      display: none;
-    }
+    
   </style>
   <button type="button" class="plus-item show-classic" role="button" onclick="newT()" id="add-button">&#10006;</button>
     <div id="myNav" class="vrlay" >
@@ -387,7 +385,8 @@
 
     <div class="buttons" id="fab-btn" onclick="fabAction()">
       <div class="actions">
-        <div class="action" id="changelog-btn" onclick="show_changelog()"> Changelog</div>
+         <!-- <div class="action" id="fullScreen-btn" onclick="setFullscreen()">Open Fullscreen</div>-->
+          <div class="action" id="changelog-btn" onclick="show_changelog()"> Changelog</div>
           <div class="action" id="settings-btn" onclick="show_settings()">⚙️ Settings</div>
           <div class="action" id="news-btn" onclick="enable_news()">📰 View News</div>
           <div class="action" id="resetN-btn" onclick="resetNH_items()">📰 Reset readed News</div>
@@ -397,6 +396,32 @@
     </div>
     
     <script>
+                  /* Get the documentElement (<html>) to display the page in fullscreen */
+          var elem = document.documentElement;
+          var statusFS=1;
+          /* View in fullscreen */
+          function setFullscreen() {
+            if(statusFS){
+              if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+              } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                elem.webkitRequestFullscreen();
+              } 
+              document.getElementById('fullScreen-btn').innerHTML="Exit Fullscreen";
+              status=0;
+            }
+            else{
+              if (document.exitFullscreen) {
+                document.exitFullscreen();
+              } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                document.webkitExitFullscreen();
+              }
+              document.getElementById('fullScreen-btn').innerHTML="Open Fullscreen";
+              status=1;
+            }
+            
+
+          }
          function fabAction() {
           var el = document.getElementById('fab-btn');
           el.classList.toggle('open');
