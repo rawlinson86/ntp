@@ -344,6 +344,13 @@ function setE4(ei4){
         Elems[i].style.display="none";
       }
       document.getElementById('fab-btn').style.display="inline";break;
+      default :document.getElementById('e4i1').classList.add('ei_selected'); 
+      var Elems=document.getElementsByClassName('show-classic');
+      for(var i=0;i<Elems.length;i++){
+        Elems[i].style.display="block";
+      }
+      document.getElementById('fab-btn').style.display="none";break;
+      break;
     }
     //Save Settings
     var arrayD= localGet("savedSettings");
