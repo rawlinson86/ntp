@@ -384,7 +384,7 @@ if(currentSettings == undefined ){
   setE1('6');
   setE2('slide');
   setE3('450');
-  setE4('classic')
+  setE4('classic');
 }//Set default Settings
 else{
   setE1(currentSettings[0]);
