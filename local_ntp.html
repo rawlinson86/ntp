@@ -26,7 +26,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#ffffff">
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="./local_ntp.css"></link>
   <!--
   <link rel="stylesheet" href="./theme.css"></link>
   <link rel="stylesheet" href="./voice.css"></link>
@@ -34,16 +34,258 @@
   <script src="./voice.js"{{LOCAL_NTP_VOICE_INTEGRITY}}></script>
   <script src="./custom-backgrounds.js"{{LOCAL_NTP_CUSTOM_BG_INTEGRITY}}></script>
   -->
-  <link rel="stylesheet" href="./swiper.min.css">
-  <link rel="stylesheet" href="./local_ntp.css"></link>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <meta charset="utf-8">
   <meta name="google" value="notranslate">
 </head>
 <!-- Remember to update the test HTML files in chrome/test/data/local_ntp/
    whenever making changes to this file.-->
-<body id="bdy">
-  
-  <button type="button" class="plus-item show-classic" onclick="newT()" id="add-button"><span>&#10006;</span></button>
+<body>
+  <style>
+    .ntpOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 9999999999;
+      background-color: rgba(255,255,255,1);
+    }
+    .centeredBlock {
+      position: absolute;
+      margin: auto;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 90%;
+      height: 70%;
+      background-color: #efefef;
+      border-radius: 26px;
+      text-align: center;
+      -webkit-box-shadow: 6px 23px 26px -17px rgba(219,219,219,1);
+      -moz-box-shadow: 6px 23px 26px -17px rgba(219,219,219,1);
+      box-shadow: 6px 23px 26px -17px rgba(219,219,219,1);
+      padding-top: 40px;
+    }
+
+    .form-wrapper {
+      max-width: 30%;
+      max-height: 80vh;
+      min-width: 300px;
+      overflow-y: auto;
+      padding: 15px;
+      padding-top: 30px;
+      margin: 30px auto;
+      color: #fff;
+      background-color: #282828;
+      border-radius: 5px;
+      box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+    }
+    .form-label {
+      color: #fff;
+      font-weight: bold;
+      z-index: 10;
+    }
+    .form-input {
+      position: relative;
+      width: 90%;
+      height:25px;
+      padding:5px;
+      border-radius: 5px;
+      outline: 0;
+      border: 0;
+      color: #000;
+      background-color: #efefef;
+      box-shadow: 0 1px 0 0 #fff;
+      transition: box-shadow 150ms ease-out;
+    }
+    .form-input:focus {
+      box-shadow: 0 4px 0 0 #1973E8;
+    }
+    .form-input.filled {
+      box-shadow: 0 4px 0 0 green;
+    }
+    .form-group button{
+      color: #fff;
+      margin: 5px;
+      border: none;
+      border-radius:5px;
+      width: 80px;
+      height:35px;
+    }
+    
+    #e-icon{
+      background-color: #000;
+      height: 27px;
+      border-radius: 5px;
+      color:#efefef;
+      margin-bottom:5px;
+    }
+    #p-tile{
+      position: relative;
+      margin-top: 5px;
+      width: 50px;
+      height: 50px;
+      border-radius: 5px; }
+    .btn-add,.btn-save{
+      background: green;
+    }
+    .btn-dark{
+      background: #000;
+    }
+    .btn-del{
+      background: red;
+    }
+    .vrlay {
+      height: 0%;
+      width: 100%;
+      position: fixed;
+      z-index: 10;
+      top: 0;
+      left: 0;
+      overflow-y: hidden;
+      transition: 0.5s;
+    }
+    .ei_style{
+      border: 2px solid #efefef !important;
+    }
+    button:focus{
+      outline: none;
+    }
+    .ei_selected,button:focus{
+      background: #000 !important;
+      border: 2px solid #efefef !important;
+    }
+    .vrlay-content {
+      position: relative;
+      width: 100%;
+      text-align: center;
+    }
+    .bp_icons{
+      height: 18px;
+    vertical-align: middle;
+    }
+    .bp_buttons{
+    
+      vertical-align: middle;
+      line-height: 14px;
+      color: #777;
+      background: #efefef;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 4px;
+    }
+    .full-hidden {
+      opacity: 0 !important;
+      position: absolute !important;
+      top: -9999999px;
+      left: -9999999px;
+      z-index: -99999;
+      width: 100vw !important;
+    }
+
+    .closeImgInvisible {
+      display: none;
+    }
+    @-webkit-keyframes shadow-inset-center {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+      }
+      100% {
+        box-shadow: 0 0 14px 0px rgba(0, 0, 0, 0.5);
+      }
+    }
+    @keyframes shadow-inset-center {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+      }
+      100% {
+        box-shadow: 0 0 14px 0px rgba(0, 0, 0, 0.5);
+      }
+    }
+    .wrapOnSwipe{
+      background-color: #282828;
+      position: absolute;
+      right: 9px;
+      border-radius: 5px;
+      width: 0px;
+      height: 142px;
+      z-index: -10;
+    }
+
+    .swiper-pagination{
+      position: relative;
+      width: 100%;
+      margin-bottom: 5px;
+    }
+    .swiper-pagination-bullet {
+      width: 14px;
+      height: 14px;
+      margin: 5px;
+    }
+    .btn-close{
+      color: #fff;
+      margin-top: -25px;
+      margin-right: -10px;
+      float: right;
+      border: none;
+      border-radius: 5px;
+      width: 25px;
+      height: 25px;
+    }
+
+    
+    .buttons {
+      display: none;
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      z-index: 10;
+    }
+    .trigger, .action {
+      border-radius: 5px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+    }
+    .trigger {
+      margin: 10px 0px 0px auto;
+      background: #007aff;
+      color: #fff;
+      height: 35px;
+      width: 35px;
+      line-height: 35px;
+      vertical-align: middle;
+      text-align: center;
+      font-size: 17.5px;
+      z-index: 1;
+    }
+    .action {
+      background-color: #000;
+      padding-left:8px;
+      color: #fff;
+      height: 35px;
+      min-width: 150px;
+      text-align: left;
+      line-height: 35px;
+    }
+    .actions {
+      display: none;
+    }
+
+    .open .actions {
+      display: block;
+    }
+    .action + .action ,.form-group + .form-group{
+          margin-top: 10px;
+        }
+    .show-classic{
+      display: none;
+    }
+  </style>
+  <button type="button" class="plus-item show-classic" role="button" onclick="newT()" id="add-button">&#10006;</button>
     <div id="myNav" class="vrlay" >
       <div class="vrlay-content">
         <div class="form-wrapper">
@@ -103,13 +345,8 @@
                 <label class="form-label" for="t-lab">Tile label</label>
                 <input id="t-lab" class="form-input" type="text" placeholder="Optional"/>
               </div>
-              <div class="form-group" id="buttons-mtGrids">
-                <button type="submit" id="btn-mt1g" class="btn-mtg" onclick="moveItem_toSlide(0)" >Move to 1 </button>
-                <button type="submit" id="btn-mt2g" class="btn-mtg" onclick="moveItem_toSlide(1)">Move to 2 </button>
-                <button type="submit" id="btn-mt3g" class="btn-mtg" onclick="moveItem_toSlide(2)" >Move to 3 </button>
-              </div>
               <div class="form-group">
-                <button type="submit" id="btn-add"  class="btn-add"  onclick="create_new_item()">Add</button>
+                <button type="submit" onclick="create_new_item()" id="btn-add" class="btn-add">Add</button>
                 <button type="submit" id="btn-del"  class="btn-del"  onclick="delete_favorite()">Delete</button>
                 <button type="submit" id="btn-save" class="btn-save" onclick="save_edited_tile()">Save</button>
                 <button type="button" id="btn-dark" class="btn-dark" onclick="close_dialog()" >Close</button>
@@ -147,30 +384,25 @@
           </div>
       </div>
     </div>
-    <div class="buttons" id="floating-btn" onclick="fabAction()">
-      <div class="floating-actions">
-          <div class="action" id="fullScreen-btn" onclick="setFullscreen()">Open Fullscreen</div>
+
+    <div class="buttons" id="fab-btn" onclick="fabAction()">
+      <div class="actions">
+         <!-- <div class="action" id="fullScreen-btn" onclick="setFullscreen()">Open Fullscreen</div>-->
           <div class="action" id="changelog-btn" onclick="show_changelog()"> Changelog</div>
           <div class="action" id="settings-btn" onclick="show_settings()">⚙️ Settings</div>
           <div class="action" id="news-btn" onclick="enable_news()">📰 View News</div>
           <div class="action" id="resetN-btn" onclick="resetNH_items()">📰 Reset readed News</div>
           <div class="action" id="add-btn" onclick="newT()">&nbsp; &#x2b; Add Item</div>
-      </div>
+        </div>
       <div class="trigger"><span id="fb-btn">▲</span></div>
     </div>
     
     <script>
-        /* Get the documentElement (<html>) to display the page in fullscreen */
-        var elem = document.documentElement;
-        var statusFS=1;
-        function moveItem_toSlide(ngrid){
-          remove_favorite(currentTileEdit);
-          mySwiper.slideTo(ngrid, "100");
-          create_new_item();
-          location.reload();
-        }
+                  /* Get the documentElement (<html>) to display the page in fullscreen */
+          var elem = document.documentElement;
+          var statusFS=1;
           /* View in fullscreen */
-        function setFullscreen() {
+          function setFullscreen() {
             if(statusFS){
               if (elem.requestFullscreen) {
                 elem.requestFullscreen();
@@ -178,7 +410,7 @@
                 elem.webkitRequestFullscreen();
               } 
               document.getElementById('fullScreen-btn').innerHTML="Exit Fullscreen";
-              statusFS=0;
+              status=0;
             }
             else{
               if (document.exitFullscreen) {
@@ -187,11 +419,13 @@
                 document.webkitExitFullscreen();
               }
               document.getElementById('fullScreen-btn').innerHTML="Open Fullscreen";
-              statusFS=1;
+              status=1;
             }
+            
+
           }
-        function fabAction() {
-          var el = document.getElementById('floating-btn');
+         function fabAction() {
+          var el = document.getElementById('fab-btn');
           el.classList.toggle('open');
           if(el.classList.contains('open')){
             document.getElementById("fb-btn").innerHTML ="▼";
@@ -216,7 +450,6 @@
           document.getElementById("btn-del").style.display="none";
           document.getElementById("btn-save").style.display="none";
           document.getElementById("btn-add").style.display="inline";
-          document.getElementById("buttons-mtGrids").style.display="none";
           //document.getElementById("add-button").style.display="none";
           document.getElementById("myNav").style.height="100%";
           needReload=0;
@@ -232,21 +465,18 @@
         var currentTileEdit;
         //Delete current Tile
         function delete_favorite(){
+
           remove_favorite(currentTileEdit);
           close_dialog();
         }
         //Edit Tile function config
         function edit_tile(el) {
-          var nGrid = ((document.querySelector('.swiper-slide-active .bm-grid')).id)[14];
-          for(var i=1;i<4;i++){document.getElementById("btn-mt"+(i)+"g").disabled=false;}
-          document.getElementById("btn-mt"+nGrid+"g").disabled=true;
           document.getElementById("changelog1").style.display="none";
           document.getElementById('form-id2').style.display="none";
           document.getElementById('form-id1').style.display="inline";
           document.getElementById("btn-del").style.display="inline";
           document.getElementById("btn-save").style.display="inline";
           document.getElementById("btn-add").style.display="none";
-          document.getElementById("buttons-mtGrids").style.display="block";
           document.getElementById("myNav").style.height="100%";
           needReload=0;
           currentTileEdit=el;
@@ -798,7 +1028,7 @@
 
   <div style="clear: both;"></div>
   <div id="center-confclose">
-    <div class="configure-item dropbtn" role="button" aria-label="Choose news region" title="Choose news region" id="configure-button"><span id="locale"></span><span class="arrow-down">🞃</span></div>
+    <div class="configure-item dropbtn" role="button" aria-label="Choose news region" title="Choose news region" id="configure-button"><div class="arrow-down" style="float: right;"></div> <span id="locale"></span></div>
     <button class="close-item" role="button" aria-label="Close news" title="Close news" id="close-button" />&#10006;</button>
   </div>
   <br/>
@@ -1115,7 +1345,7 @@ function render_gnews(answer, start_offset, n)
 */
              if (articles.length > (i + 1) && i <= 29)
              {
-                 document.getElementById('newsMore').innerHTML='<div style="color: #007aff; font-size: 24px; width: 100%; text-align: center"><b>...</b></div><br />&nbsp;<br />';
+                 document.getElementById('newsMore').innerHTML='<div style="color: #8AB4F8; font-size: 24px; width: 100%; text-align: center"><b>...</b></div><br />&nbsp;<br />';
              } else {
                  document.getElementById('newsMore').innerHTML='';
              }
