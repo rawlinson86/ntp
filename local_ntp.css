@@ -7,13 +7,14 @@ html {
   /* Width of grids based on column-count and user width device */
   --content-width: calc((var(--column-count) * (var(--tile-width) + var(--tile-margin))) + 1px);
   /* These can be overridden by themes. */
-  --ntp-pcolor:#007aff;
+  --ntp-pcolor: #007aff;
   --text-color: #000;
   --text-color-light: #fff;
   --text-color-link: rgb(17, 85, 204);
 
   height: 100%;
 }
+
 /* Change the number of columns based on the size of the device.
    Formula : (( tile-margin + tile-width ) * number of maximum capacity columns ) 
    For example if I have a smartphone with 411x823 resolution, the formula give us 253px with 3 col , and 337 with 4 col , and 420px with 5 col
@@ -21,15 +22,39 @@ html {
    Changing the size of tiles, the formulas must be recalculated, 
    in the media queries it is not possible to use calc and access to the variables, use a css compiler to simplify the code
 /*   253px < (device width) < 337px */
-@media (min-width: 253px ) {html {--column-count: 3;}}
+@media (min-width: 253px) {
+  html {
+    --column-count: 3;
+  }
+}
+
 /*   337px < (device width) < 420px */
-@media (min-width: 337px) {html {--column-count: 4;}}
+@media (min-width: 337px) {
+  html {
+    --column-count: 4;
+  }
+}
+
 /*   420px < (device width) < 510px */
-@media (min-width: 420px) {html {--column-count: 5;}}
+@media (min-width: 420px) {
+  html {
+    --column-count: 5;
+  }
+}
+
 /*   510px < (device width) < 672px */
-@media (min-width: 510px) {html {--column-count: 6;}}
+@media (min-width: 510px) {
+  html {
+    --column-count: 6;
+  }
+}
+
 /*   672px < (device width) */
-@media (min-width: 672px) {html {--column-count:8;}}
+@media (min-width: 672px) {
+  html {
+    --column-count: 8;
+  }
+}
 
 /* TODO: Need to discuss with NTP folks before we remove font-family from the
  * body tag. */
@@ -43,9 +68,10 @@ body {
   overflow-x: hidden;
   opacity: 0;
 }
+
 /* Show the body after all components are loaded */
-.inited{
-  opacity: 1!important;
+.inited {
+  opacity: 1 !important;
 }
 
 /* Button defaults vary by platform. Reset CSS so that the NTP can use buttons
@@ -72,48 +98,62 @@ a:link {
   text-decoration: none !important;
 }
 
-#bookmarks-grid1, #fake-bookmarks-grid1,#bookmarks-grid2, #fake-bookmarks-grid2,#bookmarks-grid3, #fake-bookmarks-grid3 {
+#bookmarks-grid1,
+#fake-bookmarks-grid1,
+#bookmarks-grid2,
+#fake-bookmarks-grid2,
+#bookmarks-grid3,
+#fake-bookmarks-grid3 {
   margin: auto;
   max-width: var(--content-width);
   position: relative;
 }
 
-#fake-bookmarks-grid1 ,#fake-bookmarks-grid2,#fake-bookmarks-grid3{
-    z-index: -99999;
+#fake-bookmarks-grid1,
+#fake-bookmarks-grid2,
+#fake-bookmarks-grid3 {
+  z-index: -99999;
 }
+
 .grid-item {
-    float: left;
-    width: 64px;
-    font-size: 10px;
-    overflow: hidden;
-    background: #fff;
-    margin: 10px;
-    color: #3c3c3c;
-    text-align: center;
-    z-index: 999999;
+  float: left;
+  width: 64px;
+  font-size: 10px;
+  overflow: hidden;
+  background: #fff;
+  margin: 10px;
+  color: #3c3c3c;
+  text-align: center;
+  z-index: 999999;
 }
 
 .grid-item a {
-    text-decoration: none;
-    color: #555;
+  text-decoration: none;
+  color: #555;
 }
 
 .grid-image {
-    border-radius: 6px;
-    height: 60px;
-    width: 60px;
-    background: #efefef;
-    border: 2px solid #efefef;
-    object-fit: contain;
+  border-radius: 6px;
+  height: 60px;
+  width: 60px;
+  background: #efefef;
+  border: 2px solid #efefef;
+  object-fit: contain;
 }
 
-.plus-item a,.configure-item a,.close-item a ,.newsItem a{
+.plus-item a,
+.configure-item a,
+.close-item a,
+.newsItem a {
   text-decoration: none;
 }
-.plus-item{
-  top:5px;
+
+.plus-item {
+  top: 5px;
 }
-.plus-item ,.close-item {
+
+.plus-item,
+.close-item {
   position: absolute;
   right: 5px;
   width: 25px !important;
@@ -137,12 +177,13 @@ a:link {
   margin-left: 8px;
 }
 
-#center-confclose{
+#center-confclose {
   max-width: 800px;
   margin: auto;
 }
-#news{
-  
+
+#news {
+
   margin: auto;
   margin-top: 20px !important;
   max-width: 800px;
@@ -163,7 +204,7 @@ a:link {
   background: #efefef;
   border: 2px solid #efefef;
   padding: 5px !important;
-  font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
 }
 
 .newsTitle {
@@ -172,7 +213,8 @@ a:link {
   padding-top: 5px;
 }
 
-.newsAttribution, .newsTime {
+.newsAttribution,
+.newsTime {
   color: #555;
   font-size: 70%;
 }
@@ -194,7 +236,9 @@ a:link {
   position: relative;
 }
 
-.show {display: block !important;}
+.show {
+  display: block !important;
+}
 
 .dropbtn {
   cursor: pointer;
@@ -211,7 +255,7 @@ a:link {
   background-color: #f1f1f1;
   min-width: 160px;
   overflow: auto;
-  box-shadow: 0px 2px 16px 6px rgba(0,0,0,0.2);
+  box-shadow: 0px 2px 16px 6px rgba(0, 0, 0, 0.2);
   z-index: 1;
   margin-top: 20px;
   margin-left: 8px;
@@ -227,16 +271,24 @@ a:link {
   font-size: 14px;
 }
 
-.dropdown a:hover {background-color: #ddd;}
+.dropdown a:hover {
+  background-color: #ddd;
+}
 
-.localesList { line-height: 28px; }
-.localesListUnselected { list-style-type: circle; }
+.localesList {
+  line-height: 28px;
+}
+
+.localesListUnselected {
+  list-style-type: circle;
+}
 
 .lds-dual-ring {
   display: inline-block;
   width: 64px;
   height: 64px;
 }
+
 .lds-dual-ring:after {
   content: " ";
   display: block;
@@ -248,10 +300,12 @@ a:link {
   border-color: #aaa transparent #aaa transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
+
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -272,16 +326,18 @@ a:link {
   border-radius: 5px;
   box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
 }
+
 .form-label {
   color: #fff;
   font-weight: bold;
   z-index: 10;
 }
+
 .form-input {
   position: relative;
   width: 90%;
-  height:25px;
-  padding:5px;
+  height: 25px;
+  padding: 5px;
   border-radius: 5px;
   outline: 0;
   border: 0;
@@ -290,46 +346,57 @@ a:link {
   box-shadow: 0 1px 0 0 #fff;
   transition: box-shadow 150ms ease-out;
 }
+
 .form-input:focus {
   box-shadow: 0 4px 0 0 #007aff;
 }
+
 .form-input.filled {
   box-shadow: 0 4px 0 0 green;
 }
-.form-group button{
+
+.form-group button {
   color: #fff;
   margin: 5px;
   border: none;
-  border-radius:5px;
+  border-radius: 5px;
   width: 80px;
-  height:35px;
+  height: 35px;
 }
 
-#e-icon{
+#e-icon {
   background-color: #000;
   height: 27px;
   border-radius: 5px;
-  color:#efefef;
-  margin-bottom:5px;
+  color: #efefef;
+  margin-bottom: 5px;
 }
-#p-tile{
+
+#p-tile {
   position: relative;
   margin-top: 5px;
   width: 50px;
   height: 50px;
-  border-radius: 5px; }
-.btn-add,.btn-save{
+  border-radius: 5px;
+}
+
+.btn-add,
+.btn-save {
   background: green;
 }
-.btn-dark{
+
+.btn-dark {
   background: #000;
 }
-.btn-del{
+
+.btn-del {
   background: red;
 }
-.btn-mtg{
+
+.btn-mtg {
   background: #007aff;
 }
+
 .vrlay {
   height: 0%;
   width: 100%;
@@ -340,26 +407,32 @@ a:link {
   overflow-y: hidden;
   transition: 0.5s;
 }
-.ei_style{
+
+.ei_style {
   border: 2px solid #efefef !important;
 }
-button:focus{
+
+button:focus {
   outline: none;
 }
-.ei_selected{
+
+.ei_selected {
   background: #000 !important;
-  border: 2px solid var(--ntp-pcolor)!important;
+  border: 2px solid var(--ntp-pcolor) !important;
 }
+
 .vrlay-content {
   position: relative;
   width: 100%;
   text-align: center;
 }
-.bp_icons{
+
+.bp_icons {
   height: 18px;
-vertical-align: middle;
+  vertical-align: middle;
 }
-.bp_buttons{
+
+.bp_buttons {
 
   vertical-align: middle;
   line-height: 14px;
@@ -369,6 +442,7 @@ vertical-align: middle;
   padding: 10px;
   margin: 4px;
 }
+
 .full-hidden {
   opacity: 0 !important;
   position: absolute !important;
@@ -381,23 +455,28 @@ vertical-align: middle;
 .closeImgInvisible {
   display: none;
 }
+
 @-webkit-keyframes shadow-inset-center {
   0% {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
+
   100% {
     box-shadow: 0 0 14px 0px rgba(0, 0, 0, 0.5);
   }
 }
+
 @keyframes shadow-inset-center {
   0% {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
+
   100% {
     box-shadow: 0 0 14px 0px rgba(0, 0, 0, 0.5);
   }
 }
-.wrapOnSwipe{
+
+.wrapOnSwipe {
   background-color: #282828;
   position: absolute;
   right: 9px;
@@ -407,17 +486,19 @@ vertical-align: middle;
   z-index: -10;
 }
 
-.swiper-pagination{
+.swiper-pagination {
   position: relative;
   width: 100%;
   margin-bottom: 5px;
 }
+
 .swiper-pagination-bullet {
   width: 14px;
   height: 14px;
   margin: 5px;
 }
-.btn-close{
+
+.btn-close {
   color: #fff;
   margin-top: -25px;
   margin-right: -10px;
@@ -427,8 +508,9 @@ vertical-align: middle;
   width: 25px;
   height: 25px;
 }
+
 button:disabled,
-button[disabled]{
+button[disabled] {
   background: #000;
   opacity: 0.2;
 }
@@ -440,11 +522,14 @@ button[disabled]{
   right: 15px;
   z-index: 10;
 }
-.trigger, .action {
+
+.trigger,
+.action {
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
   cursor: pointer;
 }
+
 .trigger {
   margin: 10px 0px 0px auto;
   background: #007aff;
@@ -457,33 +542,40 @@ button[disabled]{
   font-size: 17.5px;
   z-index: 1;
 }
+
 .action {
   background-color: #000;
-  padding-left:8px;
+  padding-left: 8px;
   color: #fff;
   height: 35px;
   min-width: 150px;
   text-align: left;
   line-height: 35px;
 }
+
 .floating-actions {
   height: 0;
   visibility: hidden;
   opacity: 0;
 }
+
 .open .floating-actions {
   height: auto;
   visibility: visible;
   opacity: 1;
   transition: visibility 0s, opacity 0.2s linear;
 }
-.action + .action ,.form-group + .form-group{
-      margin-top: 10px;
-    }
-.show-classic{
+
+.action+.action,
+.form-group+.form-group {
+  margin-top: 10px;
+}
+
+.show-classic {
   display: none;
 }
-.plus-item span{
-display: inline-block;
-transform: rotate(45deg);
+
+.plus-item span {
+  display: inline-block;
+  transform: rotate(45deg);
 }
