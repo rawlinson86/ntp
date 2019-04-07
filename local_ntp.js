@@ -343,7 +343,7 @@ function setE4(ei4){
       document.getElementById('e4i1').classList.remove('ei_selected');
       document.getElementById('e4i2').classList.remove('ei_selected');
     }catch(err){};
-
+    if(ei4==null)ei4='classic';
     switch(ei4){
       case 'classic' : document.getElementById('e4i1').classList.add('ei_selected'); 
       var Elems=document.getElementsByClassName('show-classic');
