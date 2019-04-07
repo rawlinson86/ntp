@@ -378,6 +378,7 @@ var currentSwiperSlide=sessionStorage.getItem("currentSwiperSlide");
 if(currentSwiperSlide == undefined){currentSwiperSlide=0;}//Set default slide
 //Check saved settings
 var currentSettings=localGet("savedSettings");
+
 if(currentSettings == undefined ){
   currentSettings=['6','slide','450','classic'];
   localStore("savedSettings",currentSettings);
@@ -385,8 +386,12 @@ if(currentSettings == undefined ){
   setE2('slide');
   setE3('450');
   setE4('classic');
-}//Set default Settings
-else{
+}
+else{//Set default Settings
+  if( currentSettings[0]==null)currentSettings[0]="6";
+  if( currentSettings[1]==null)currentSettings[0]="slide";
+  if( currentSettings[2]==null)currentSettings[0]="450";
+  if( currentSettings[3]==null)currentSettings[0]="classic";
   setE1(currentSettings[0]);
   setE2(currentSettings[1]);
   setE3(currentSettings[2]);
