@@ -51,15 +51,22 @@
           <div id="changelog1" class="form-group" style="max-height : 80vh; text-align: left !important;">
             <h2># Changelog</h2>
             <hr>
-            <h3>## [1.0.4] - 2019-04-04</h5>
+            <h3>## [1.0.5] - 2019-04-08</h5>
             <h4>### Added <br>
-            - Button to edit tile ( longpress on tile to enter edit mode , then pick the edit icon :D ).<br>
-            - Option to switch UI Interactions to classic(default) or compact (all buttons are inside one floating button ) <br><br>
+            - Button to move tile to other pages ( available in edit tile dialog )<br>
+            - Testing : Focus Mode ( on compact UI there's a button to enable it) <br><br>
             ### Changed <br>
-            - Some UI improvement
+            - UI improvements
             </h4>
             <hr>
-            <div style="color:grey;">
+            <div style="color:#757575;">
+              <h3>## [1.0.4] - 2019-04-04</h5>
+                <h4>### Added <br>
+                - Button to edit tile ( longpress on tile to enter edit mode , then pick the edit icon :D ).<br>
+                - Option to switch UI Interactions to classic(default) or compact (all buttons are inside one floating button ) <br><br>
+                ### Changed <br>
+                - Some UI improvement
+              </h4>
               <h3>## [1.0.3] - 2019-04-02</h5>
                 <h4>### Added <br>
                 - New UI Interactions .<br>
@@ -108,6 +115,7 @@
                 <button type="submit" id="btn-mt2g" class="btn-mtg" onclick="moveItem_toSlide(1)">Move to 2 </button>
                 <button type="submit" id="btn-mt3g" class="btn-mtg" onclick="moveItem_toSlide(2)" >Move to 3 </button>
               </div>
+              
               <div class="form-group">
                 <button type="submit" id="btn-add"  class="btn-add"  onclick="create_new_item()">Add</button>
                 <button type="submit" id="btn-del"  class="btn-del"  onclick="delete_favorite()">Delete</button>
@@ -138,6 +146,7 @@
                   <button type="button" onclick="setE4('classic')"  class="ei_style" id="e4i1">Classic</button>
                   <button type="button" onclick="setE4('compact')"  class="ei_style ei_selected" id="e4i2">Compact</button>
                 </div>
+                <hr>
                 <div class="form-group">
                   <button type="submit" id="btn-res"  class="btn-del" onclick="reset_page()">Reset</button>
                   <button type="button" id="btn-dark" class="btn-dark" onclick="show_changelog()" >Changelog</button>
@@ -149,7 +158,7 @@
     </div>
     <div class="buttons" id="floating-btn" onclick="fabAction()">
       <div class="floating-actions">
-          <div class="action" id="fullScreen-btn" onclick="setFullscreen()">Open Fullscreen</div>
+          <div class="action" id="fullScreen-btn" onclick="setFullscreen()">Focus Mode</div>
           <div class="action" id="changelog-btn" onclick="show_changelog()"> Changelog</div>
           <div class="action" id="settings-btn" onclick="show_settings()">⚙️ Settings</div>
           <div class="action" id="news-btn" onclick="enable_news()">📰 View News</div>
@@ -177,7 +186,7 @@
               } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
                 elem.webkitRequestFullscreen();
               } 
-              document.getElementById('fullScreen-btn').innerHTML="Exit Fullscreen";
+              document.getElementById('fullScreen-btn').innerHTML="Exit Focus Mode";
               statusFS=0;
             }
             else{
@@ -186,7 +195,7 @@
               } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
                 document.webkitExitFullscreen();
               }
-              document.getElementById('fullScreen-btn').innerHTML="Open Fullscreen";
+              document.getElementById('fullScreen-btn').innerHTML="Focus Mode";
               statusFS=1;
             }
           }
@@ -299,14 +308,14 @@
         }
         //Check ntpVersion
         if(localStorage.ntpVersion){
-          if(localStorage.ntpVersion != "1.0.4"){
+          if(localStorage.ntpVersion != "1.0.5"){
             show_changelog();
-            localStorage.ntpVersion="1.0.4"
+            localStorage.ntpVersion="1.0.5"
           }
         }
         else{
           show_changelog();
-          localStorage.ntpVersion="1.0.4"
+          localStorage.ntpVersion="1.0.5"
         }
         //Activate/Disable custom icon url
         function editIURL(eID){
